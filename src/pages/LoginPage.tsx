@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   FormControl,
   IconButton,
   InputAdornment,
@@ -14,16 +13,22 @@ import { useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import {
+  PrimaryButton,
+  SecondaryButton,
+} from '../styling/styledComponents/Buttons';
 
 export const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-  const navigate = useNavigate(); //Ta bort denna för enhetligt? navigera på samma sätt i alla pages
+  const navigate = useNavigate();
+  const handleLogin = () => navigate('/home');
 
   return (
     <>
-      <p> Välkommen till yatzy Scoreboard</p>
+      {/* TODO : Byta ut till material ui */}
+      <h1> Välkommen till yatzy Scoreboard</h1>
       <div>
         <Box
           sx={{
@@ -58,8 +63,6 @@ export const LoginPage = () => {
                         : 'display the password'
                     }
                     onClick={handleClickShowPassword}
-                    // onMouseDown={handleMouseDownPassword}
-                    // onMouseUp={handleMouseUpPassword}
                     edge="end"
                   >
                     {showPassword ? <VisibilityOff /> : <Visibility />}
@@ -70,24 +73,31 @@ export const LoginPage = () => {
             />
           </FormControl>
 
-          {/* <TextField
-            id="outlined-password-input"
-            label="Lösenord"
-            type="password"
-            autoComplete="current-password"
-          /> */}
-          <Button variant="contained" fullWidth>
+          <PrimaryButton
+            variant="contained"
+            fullWidth
+            aria-label="Logga in och gå vidare till startsida"
+            onClick={handleLogin}
+          >
             Logga in
-          </Button>
+          </PrimaryButton>
           {/* Ska vara lika långt som det andra */}
           <Typography> eller </Typography>
-          <Button variant="outlined" fullWidth onClick={() => navigate('/')}>
+          <SecondaryButton
+            variant="outlined"
+            fullWidth
+            onClick={() => navigate('/')}
+            aria-label="Fortsätt som gäst och gå till startsida"
+          >
             Fortsätt som gäst{' '}
-          </Button>
+          </SecondaryButton>
           {/* TODO.. ska vara länkat rätt */}
           <Typography variant="body2">
             Har du inget konto?
-            <Link component={RouterLink} to="/register">
+            <Link
+              onClick={() => navigate('/register')}
+              aria-label="Gå till sidan för att skapa en användare"
+            >
               Skapa användare
             </Link>
           </Typography>
