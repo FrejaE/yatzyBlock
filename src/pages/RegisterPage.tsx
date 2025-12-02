@@ -1,6 +1,6 @@
 import { Box, TextField, Typography, Link } from '@mui/material';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import { PrimaryButton } from '../styling/styledComponents/Buttons';
+import { useNavigate } from 'react-router-dom';
+import { PrimaryButton } from '../components/Buttons';
 
 export const RegisterPage = () => {
   const navigate = useNavigate();

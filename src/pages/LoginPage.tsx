@@ -10,13 +10,10 @@ import {
   Typography,
 } from '@mui/material';
 import { useState } from 'react';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import {
-  PrimaryButton,
-  SecondaryButton,
-} from '../styling/styledComponents/Buttons';
+import { PrimaryButton, SecondaryButton } from '../components/Buttons';
 
 export const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -27,8 +24,6 @@ export const LoginPage = () => {
 
   return (
     <>
-      {/* TODO : Byta ut till material ui */}
-      <h1> Välkommen till yatzy Scoreboard</h1>
       <div>
         <Box
           sx={{
@@ -41,6 +36,7 @@ export const LoginPage = () => {
             justifyContent: 'center',
           }}
         >
+          <h1> Välkommen till YatzyBlock</h1>
           <TextField
             id="outlined-basic"
             label="Användarnamn"
@@ -57,11 +53,7 @@ export const LoginPage = () => {
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton
-                    aria-label={
-                      showPassword
-                        ? 'hide the password'
-                        : 'display the password'
-                    }
+                    aria-label={showPassword ? 'göm lösenord' : 'visa lösenord'}
                     onClick={handleClickShowPassword}
                     edge="end"
                   >
@@ -81,7 +73,7 @@ export const LoginPage = () => {
           >
             Logga in
           </PrimaryButton>
-          {/* Ska vara lika långt som det andra */}
+          {/* TODO : Ska vara lika långt som det andra */}
           <Typography> eller </Typography>
           <SecondaryButton
             variant="outlined"
