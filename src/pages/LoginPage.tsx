@@ -20,7 +20,7 @@ export const LoginPage = () => {
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const navigate = useNavigate();
-  const handleLogin = () => navigate('/home');
+  const handleLogin = () => navigate('/');
 
   return (
     <>
