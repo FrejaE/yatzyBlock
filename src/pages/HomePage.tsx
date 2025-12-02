@@ -1,7 +1,9 @@
-import { Box, Button } from '@mui/material';
-import { Link as RouterLink } from 'react-router-dom';
+import { Box } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { HeroButton } from '../components/Buttons';
 
 export const HomePage = () => {
+  const navigate = useNavigate();
   return (
     <>
       <Box
@@ -11,15 +13,24 @@ export const HomePage = () => {
           alignItems: 'center',
           gap: 2,
           justifyContent: 'center',
+          width: '200px',
         }}
       >
-        <Button variant="contained" component={RouterLink} to="/game">
+        <HeroButton
+          variant="contained"
+          onClick={() => navigate('/game')}
+          fullWidth
+        >
           {' '}
           Börja nytt spel{' '}
-        </Button>
-        <Button variant="contained" component={RouterLink} to="/rules">
+        </HeroButton>
+        <HeroButton
+          variant="contained"
+          onClick={() => navigate('/rules')}
+          fullWidth
+        >
           Spelregler
-        </Button>
+        </HeroButton>
       </Box>
       {/* <WinnersPodium /> komponent vara här  */}
     </>

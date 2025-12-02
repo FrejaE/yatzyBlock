@@ -1,7 +1,9 @@
-import { Box, Button, TextField, Typography, Link } from '@mui/material';
-import { Link as RouterLink } from 'react-router-dom';
+import { Box, TextField, Typography, Link } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { PrimaryButton } from '../components/Buttons';
 
 export const RegisterPage = () => {
+  const navigate = useNavigate();
   return (
     <>
       <Box
@@ -16,7 +18,7 @@ export const RegisterPage = () => {
         }}
       >
         <Typography> Skapa användare</Typography>
-        {/* Rätt typo här, storlek */}
+        {/* TODO : Rätt typo här, storlek */}
         <TextField id="outlined-basic" label="Email" variant="outlined" />
         <TextField
           id="outlined-basic"
@@ -29,14 +31,12 @@ export const RegisterPage = () => {
           type="password"
           autoComplete="current-password"
         />
-        <Button variant="contained" fullWidth>
+        <PrimaryButton variant="contained" fullWidth>
           Skapa användare
-        </Button>
+        </PrimaryButton>
         <Typography variant="body2">
           Redan medlem
-          <Link component={RouterLink} to="/login">
-            Logga in
-          </Link>
+          <Link onClick={() => navigate('/login')}>Logga in</Link>
         </Typography>
       </Box>
     </>
