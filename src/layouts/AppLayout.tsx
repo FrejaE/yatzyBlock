@@ -1,14 +1,20 @@
-import { Box } from '@mui/material';
-import { Outlet } from 'react-router-dom';
+import { Box } from "@mui/material";
+import { Outlet } from "react-router-dom";
+import { Header } from "../components/Header";
 
 export const AppLayout = () => {
   return (
-    <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      <header>
-        <p>Frejas coola icon bland annat</p>
-      </header>
+    <Box
+      sx={{
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        backgroundColor: "#A68F97",
+      }}
+    >
+      <Header />
 
-      <Box sx={{ flexGrow: 1, padding: 2 }}>
+      <Box>
         <Outlet />
       </Box>
 
