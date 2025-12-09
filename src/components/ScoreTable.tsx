@@ -30,7 +30,11 @@ const lowerCategories = [
 export const ScoreTable = () => {
   return (
     <>
-      <Table stickyHeader aria-label="sticky table">
+      <Table
+        stickyHeader
+        aria-label="sticky table"
+        sx={{ backgroundColor: "white" }}
+      >
         <TableHead>
           <TableRow>
             <TableCell sx={{ padding: "4px" }}> Spelare </TableCell>
