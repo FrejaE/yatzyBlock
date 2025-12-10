@@ -74,6 +74,14 @@ export const ScoreTable = () => {
     const bonus = calcBonus(total);
     return bonus;
   };
+  const handleTotal = (playerId: string) => {
+    const upperTotal = calculation(playerId, scores, upperCategories);
+    const bonus = calcBonus(upperTotal);
+    const lowerTotal = calculation(playerId, scores, lowerCategories);
+
+    const totalSum = upperTotal + bonus + lowerTotal;
+    return totalSum;
+  };
   return (
     <>
       <Table
@@ -223,6 +231,42 @@ export const ScoreTable = () => {
               ))}
             </TableRow>
           ))}
+        </TableBody>
+
+        <TableBody>
+          <TableRow>
+            <TableCell
+              sx={{ padding: "4px", borderTop: "2px solid #454545ff" }}
+            >
+              {" "}
+              Summa{" "}
+            </TableCell>
+            {players.map((p) => (
+              <TableCell
+                key={p.id}
+                sx={{ padding: "4px", borderTop: "2px solid #454545ff" }}
+              >
+                <TextField
+                  type="number"
+                  variant="standard"
+                  InputProps={{
+                    disableUnderline: true,
+                    readOnly: true,
+                    sx: {
+                      padding: 0,
+                      width: "40px",
+                      textAlign: "center",
+                      border: "1px solid #ccc",
+                      borderRadius: "4px",
+                      background: "#fff",
+                      fontSize: "0.9rem",
+                    },
+                  }}
+                  value={handleTotal(p.id)}
+                ></TextField>
+              </TableCell>
+            ))}
+          </TableRow>
         </TableBody>
       </Table>
     </>

@@ -23,3 +23,5 @@ export const calcBonus = (total: number) => {
     return 0;
   }
 };
+
+export const calcTotal = () => {};
