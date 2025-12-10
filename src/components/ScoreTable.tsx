@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import type { Player, Score } from "../models/Player";
+import { calcBonus, calculation } from "../utils/calculation-logic";
 
 const players: Player[] = [
   { id: "1", name: "Anna", scores: [] },
@@ -67,6 +68,11 @@ export const ScoreTable = () => {
       return "";
     }
     return score?.points ?? "";
+  };
+  const handleBonus = (playerId: string, categories: string[]) => {
+    const total = calculation(playerId, scores, categories);
+    const bonus = calcBonus(total);
+    return bonus;
   };
   return (
     <>
@@ -131,7 +137,6 @@ export const ScoreTable = () => {
                 key={p.id}
                 sx={{ padding: "4px", borderTop: "2px solid #454545ff" }}
               >
-                {/* <TextField> {Här kommer uträkningen vara }</TextField> */}
                 <TextField
                   type="number"
                   variant="standard"
@@ -148,6 +153,7 @@ export const ScoreTable = () => {
                       fontSize: "0.9rem",
                     },
                   }}
+                  value={calculation(p.id, scores, upperCategories)}
                 ></TextField>
               </TableCell>
             ))}
@@ -163,7 +169,6 @@ export const ScoreTable = () => {
                 key={p.id}
                 sx={{ padding: "4px", borderBottom: "2px solid #454545ff" }}
               >
-                {/* <TextField> {Här kommer booelan för bonus va}</TextField> */}
                 <TextField
                   type="number"
                   variant="standard"
@@ -180,6 +185,7 @@ export const ScoreTable = () => {
                       fontSize: "0.9rem",
                     },
                   }}
+                  value={handleBonus(p.id, upperCategories)}
                 ></TextField>
               </TableCell>
             ))}
