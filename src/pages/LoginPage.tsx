@@ -8,32 +8,32 @@ import {
   OutlinedInput,
   TextField,
   Typography,
-} from '@mui/material';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { PrimaryButton, SecondaryButton } from '../components/Buttons';
+} from "@mui/material";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { PrimaryButton, SecondaryButton } from "../components/Buttons";
 
 export const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const navigate = useNavigate();
-  const handleLogin = () => navigate('/');
+  const handleLogin = () => navigate("/");
 
   return (
     <>
       <div>
         <Box
           sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            height: '100vh',
-            width: '240px',
-            alignItems: 'center',
+            display: "flex",
+            flexDirection: "column",
+            height: "100vh",
+            width: "240px",
+            alignItems: "center",
             gap: 2,
-            justifyContent: 'center',
+            justifyContent: "center",
           }}
         >
           <h1> Välkommen till YatzyBlock</h1>
@@ -43,17 +43,17 @@ export const LoginPage = () => {
             variant="outlined"
           />
 
-          <FormControl sx={{ m: 1, width: 'auto' }} variant="outlined">
+          <FormControl sx={{ m: 1, width: "auto" }} variant="outlined">
             <InputLabel htmlFor="outlined-adornment-password">
               Lösenord
             </InputLabel>
             <OutlinedInput
               id="outlined-adornment-password"
-              type={showPassword ? 'text' : 'password'}
+              type={showPassword ? "text" : "password"}
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton
-                    aria-label={showPassword ? 'göm lösenord' : 'visa lösenord'}
+                    aria-label={showPassword ? "göm lösenord" : "visa lösenord"}
                     onClick={handleClickShowPassword}
                     edge="end"
                   >
@@ -78,16 +78,16 @@ export const LoginPage = () => {
           <SecondaryButton
             variant="outlined"
             fullWidth
-            onClick={() => navigate('/')}
+            onClick={() => navigate("/")}
             aria-label="Fortsätt som gäst och gå till startsida"
           >
-            Fortsätt som gäst{' '}
+            Fortsätt som gäst{" "}
           </SecondaryButton>
           {/* TODO.. ska vara länkat rätt */}
           <Typography variant="body2">
             Har du inget konto?
             <Link
-              onClick={() => navigate('/register')}
+              onClick={() => navigate("/register")}
               aria-label="Gå till sidan för att skapa en användare"
             >
               Skapa användare
