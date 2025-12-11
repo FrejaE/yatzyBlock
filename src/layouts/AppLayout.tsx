@@ -9,7 +9,6 @@ export const AppLayout = () => {
         minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
-        backgroundColor: "#A68F97",
       }}
     >
       <Header />
@@ -17,8 +16,6 @@ export const AppLayout = () => {
       <Box>
         <Outlet />
       </Box>
-
-      <footer>Made by me, Freja Edberg</footer>
     </Box>
   );
 };

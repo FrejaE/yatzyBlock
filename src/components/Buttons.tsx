@@ -34,11 +34,8 @@ export const HeroButton = styled(Button)(({ theme }) => ({
   fontWeight: 500,
   borderRadius: "12px",
   textTransform: "none",
-  backgroundColor: "#004F4D",
-  color: "#fff",
-  "&:hover": {
-    backgroundColor: "#004F4D",
-  },
+  backgroundColor: "#F7C948",
+  color: "#4A4A4A",
 }));
 
 export const NeutralButton = styled(Button)(({ theme }) => ({
@@ -53,3 +50,9 @@ export const NeutralButton = styled(Button)(({ theme }) => ({
     backgroundColor: "#bdbdbd",
   },
 }));
+
+// primär färg knapp och yatzyblock text -- E45343 -- samma färg på plus knapp (add-players-page)
+// gul knapp, funkar bra som call to action -- F7C948
+// mörk textfärg -- 4A4A4A
+// backgrund på inputs -- FFFFFF -- plus iconens färg
+// bakgrundsfärg hela sidan FAF7F2
