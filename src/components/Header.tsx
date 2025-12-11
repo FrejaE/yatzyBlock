@@ -1,7 +1,10 @@
-import { Box, Typography } from "@mui/material";
+import { Box, IconButton, Typography } from "@mui/material";
 import CasinoRoundedIcon from "@mui/icons-material/Casino";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { useNavigate } from "react-router-dom";
 
 export const Header = () => {
+  const navigate = useNavigate();
   return (
     <>
       <Box
@@ -15,6 +18,11 @@ export const Header = () => {
           justifyContent: "center",
         }}
       >
+        {location.pathname !== "/" && (
+          <IconButton onClick={() => navigate(-1)} aria-label="Gå tillbaka">
+            <ArrowBackIcon />
+          </IconButton>
+        )}
         <CasinoRoundedIcon
           sx={{
             paddingRight: "8px",
