@@ -62,6 +62,7 @@ export const AddPlayersPage = () => {
         sx={{
           width: "240px",
         }}
+        aria-label="Tryck för att starta spel"
       >
         {" "}
         Starta spelet
