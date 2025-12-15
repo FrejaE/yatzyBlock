@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { PrimaryButton, SecondaryButton } from "../components/Buttons";
+import { useUser } from "../context/UserContext";
 
 export const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -22,6 +23,13 @@ export const LoginPage = () => {
   const navigate = useNavigate();
   const handleLogin = () => navigate("/");
 
+  const { loginAsGuest } = useUser();
+
+  const handleGuest = () => {
+    const guest = loginAsGuest();
+    console.log("loggade in som gäst", guest);
+    navigate("/");
+  };
   return (
     <>
       <div>
@@ -78,7 +86,7 @@ export const LoginPage = () => {
           <SecondaryButton
             variant="outlined"
             fullWidth
-            onClick={() => navigate("/")}
+            onClick={handleGuest}
             aria-label="Fortsätt som gäst och gå till startsida"
           >
             Fortsätt som gäst{" "}

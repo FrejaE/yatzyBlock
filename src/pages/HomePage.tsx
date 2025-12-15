@@ -4,6 +4,7 @@ import { HeroButton } from "../components/Buttons";
 
 export const HomePage = () => {
   const navigate = useNavigate();
+
   return (
     <>
       <Box
