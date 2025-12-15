@@ -2,15 +2,21 @@ import { useNavigate } from "react-router-dom";
 import { HeroButton } from "../components/Buttons";
 import { Box, IconButton, Typography } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useUser } from "../context/UserContext";
 
 export const AddPlayersPage = () => {
   const [players, setPlayers] = useState(["Spelare 1", "Spelare 2"]);
+  const { user } = useUser();
+  const [names, setNames] = useState([user?.username ?? "", ""]);
+
   const navigate = useNavigate();
 
   const addPlayer = () => {
     setPlayers([...players, `Spelare ${players.length + 1}`]);
+    setNames([...names, ""]);
   };
+
   return (
     <Box
       sx={{
@@ -29,6 +35,14 @@ export const AddPlayersPage = () => {
           </label>
           <input
             type="text"
+            value={names[index]}
+            readOnly={index === 0 && !!user}
+            // TODO : fundera på om user ska ha readonly eller inte?? man kanske vill ändra
+            onChange={(e) => {
+              const clone = [...names];
+              clone[index] = e.target.value;
+              setNames(clone);
+            }}
             style={{
               padding: "10px 14px",
               borderRadius: "8px",
