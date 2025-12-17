@@ -1,4 +1,5 @@
 import {
+  Button,
   Table,
   TableBody,
   TableCell,
@@ -10,6 +11,7 @@ import { useEffect, useState } from "react";
 import type { Player, Score } from "../models/Player";
 import { calcBonus, calculation } from "../utils/calculation-logic";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useUser } from "../context/UserContext";
 
 const upperCategories = ["Ettor", "Tvåor", "Treor", "Fyror", "Femmor", "Sexor"];
 const lowerCategories = [
@@ -34,6 +36,7 @@ export const ScoreTable = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const players = location.state?.players as Player[];
+  const { user } = useUser();
 
   // om något går fel och man hamnar på scoretable som är tom
   useEffect(() => {
@@ -84,14 +87,33 @@ export const ScoreTable = () => {
     const bonus = calcBonus(total);
     return bonus;
   };
-  //   const handleTotal = (playerId: string) => {
-  //     const upperTotal = calculation(playerId, scores, upperCategories);
-  //     const bonus = calcBonus(upperTotal);
-  //     const lowerTotal = calculation(playerId, scores, lowerCategories);
 
-  //     const totalSum = upperTotal + bonus + lowerTotal;
-  //     return totalSum;
-  //   };
+  const handleTotal = (playerId: string) => {
+    const upperTotal = calculation(playerId, scores, upperCategories);
+    const bonus = calcBonus(upperTotal);
+    const lowerTotal = calculation(playerId, scores, lowerCategories);
+
+    const totalSum = upperTotal + bonus + lowerTotal;
+    return totalSum;
+  };
+
+  const handleFinishGame = async () => {
+    const results = players.map((p) => ({
+      name: p.name,
+      totalScore: handleTotal(p.id),
+    }));
+    console.log("RESULTAT:", results);
+
+    await fetch("http://localhost:1337/games", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        createdBy: user?.id,
+        players: results,
+      }),
+    });
+  };
+
   return (
     <>
       <Table
@@ -279,6 +301,15 @@ export const ScoreTable = () => {
           </TableRow>
         </TableBody> */}
       </Table>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={handleFinishGame}
+        sx={{ mt: 2 }}
+      >
+        {" "}
+        Se resultat{" "}
+      </Button>
     </>
   );
 };
