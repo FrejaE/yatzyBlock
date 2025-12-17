@@ -18,13 +18,19 @@ type UserProviderProps = {
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider = ({ children }: UserProviderProps) => {
-  const [user, setUser] = useState<User>(null);
+  // spara inloggad user i local storage
+  const [user, setUser] = useState<User>(() => {
+    const stored = localStorage.getItem("user");
+    return stored ? JSON.parse(stored) : null;
+  });
 
   const login = (userData: User) => {
     setUser(userData);
+    localStorage.setItem("user", JSON.stringify(userData));
   };
   const logout = () => {
     setUser(null);
+    localStorage.removeItem("user");
   };
 
   const loginAsGuest = () => {
