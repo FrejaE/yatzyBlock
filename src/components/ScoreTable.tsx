@@ -6,14 +6,10 @@ import {
   TableRow,
   TextField,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { Player, Score } from "../models/Player";
 import { calcBonus, calculation } from "../utils/calculation-logic";
-
-const players: Player[] = [
-  { id: "1", name: "Anna", scores: [] },
-  { id: "2", name: "Emil", scores: [] },
-];
+import { useLocation, useNavigate } from "react-router-dom";
 
 const upperCategories = ["Ettor", "Tvåor", "Treor", "Fyror", "Femmor", "Sexor"];
 const lowerCategories = [
@@ -35,6 +31,20 @@ const lowerCategories = [
 
 export const ScoreTable = () => {
   const [scores, setScores] = useState<Score[]>([]);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const players = location.state?.players as Player[];
+
+  // om något går fel och man hamnar på scoretable som är tom
+  useEffect(() => {
+    if (!players || players.length === 0) {
+      navigate("/add-players");
+    }
+  }, [players, navigate]);
+
+  if (!players) {
+    return <div>Omdirigerar...</div>;
+  }
 
   const handleChange = (points: number, category: string, playerId: string) => {
     if (!scores.length) {
@@ -74,14 +84,14 @@ export const ScoreTable = () => {
     const bonus = calcBonus(total);
     return bonus;
   };
-  const handleTotal = (playerId: string) => {
-    const upperTotal = calculation(playerId, scores, upperCategories);
-    const bonus = calcBonus(upperTotal);
-    const lowerTotal = calculation(playerId, scores, lowerCategories);
+  //   const handleTotal = (playerId: string) => {
+  //     const upperTotal = calculation(playerId, scores, upperCategories);
+  //     const bonus = calcBonus(upperTotal);
+  //     const lowerTotal = calculation(playerId, scores, lowerCategories);
 
-    const totalSum = upperTotal + bonus + lowerTotal;
-    return totalSum;
-  };
+  //     const totalSum = upperTotal + bonus + lowerTotal;
+  //     return totalSum;
+  //   };
   return (
     <>
       <Table
@@ -233,7 +243,7 @@ export const ScoreTable = () => {
           ))}
         </TableBody>
 
-        <TableBody>
+        {/* <TableBody>
           <TableRow>
             <TableCell
               sx={{ padding: "4px", borderTop: "2px solid #454545ff" }}
@@ -267,7 +277,7 @@ export const ScoreTable = () => {
               </TableCell>
             ))}
           </TableRow>
-        </TableBody>
+        </TableBody> */}
       </Table>
     </>
   );
