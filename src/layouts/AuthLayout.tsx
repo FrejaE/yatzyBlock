@@ -7,16 +7,15 @@ export const AuthLayout = () => {
     <>
       <Box
         sx={{
-          height: "100vh",
+          minHeight: "100vh",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "center",
+          //   justifyContent: "center",
           alignItems: "center",
           padding: 2,
         }}
       >
         <Header />
-
         <Box
           sx={{
             width: {

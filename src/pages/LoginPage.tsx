@@ -49,81 +49,77 @@ export const LoginPage = () => {
   };
   return (
     <>
-      <div>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            height: "100vh",
-            width: "240px",
-            alignItems: "center",
-            gap: 2,
-            justifyContent: "center",
-          }}
-        >
-          <h1> Välkommen till YatzyBlock</h1>
-          <TextField
-            id="outlined-basic"
-            label="Användarnamn"
-            variant="outlined"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          width: "240px",
+          alignItems: "center",
+          gap: 2,
+        }}
+      >
+        <h1> Välkommen till YatzyBlock</h1>
+        <TextField
+          id="outlined-basic"
+          label="Användarnamn"
+          variant="outlined"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          fullWidth
+        />
+        <FormControl sx={{ m: 1, width: "auto" }} variant="outlined">
+          <InputLabel htmlFor="outlined-adornment-password">
+            Lösenord
+          </InputLabel>
+          <OutlinedInput
+            sx={{ width: "240px" }}
+            id="outlined-adornment-password"
+            type={showPassword ? "text" : "password"}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            autoComplete="current-password"
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label={showPassword ? "göm lösenord" : "visa lösenord"}
+                  onClick={handleClickShowPassword}
+                  edge="end"
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
+            label="Password"
           />
+        </FormControl>
 
-          <FormControl sx={{ m: 1, width: "auto" }} variant="outlined">
-            <InputLabel htmlFor="outlined-adornment-password">
-              Lösenord
-            </InputLabel>
-            <OutlinedInput
-              id="outlined-adornment-password"
-              type={showPassword ? "text" : "password"}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              autoComplete="current-password"
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label={showPassword ? "göm lösenord" : "visa lösenord"}
-                    onClick={handleClickShowPassword}
-                    edge="end"
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              }
-              label="Password"
-            />
-          </FormControl>
-
-          <PrimaryButton
-            variant="contained"
-            fullWidth
-            aria-label="Logga in och gå vidare till startsida"
-            onClick={() => handleLogin(username, password)}
+        <PrimaryButton
+          variant="contained"
+          fullWidth
+          aria-label="Logga in och gå vidare till startsida"
+          onClick={() => handleLogin(username, password)}
+        >
+          Logga in
+        </PrimaryButton>
+        <Typography> eller </Typography>
+        <SecondaryButton
+          variant="outlined"
+          fullWidth
+          onClick={handleGuest}
+          aria-label="Fortsätt som gäst och gå till startsida"
+        >
+          Fortsätt som gäst{" "}
+        </SecondaryButton>
+        <Typography variant="body2">
+          Har du inget konto?
+          <Link
+            onClick={() => navigate("/register")}
+            aria-label="Gå till sidan för att skapa en användare"
           >
-            Logga in
-          </PrimaryButton>
-          {/* TODO : Ska vara lika långt som det andra */}
-          <Typography> eller </Typography>
-          <SecondaryButton
-            variant="outlined"
-            fullWidth
-            onClick={handleGuest}
-            aria-label="Fortsätt som gäst och gå till startsida"
-          >
-            Fortsätt som gäst{" "}
-          </SecondaryButton>
-          <Typography variant="body2">
-            Har du inget konto?
-            <Link
-              onClick={() => navigate("/register")}
-              aria-label="Gå till sidan för att skapa en användare"
-            >
-              Skapa användare
-            </Link>
-          </Typography>
-        </Box>
-      </div>
+            Skapa användare
+          </Link>
+        </Typography>
+      </Box>
     </>
   );
 };

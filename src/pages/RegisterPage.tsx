@@ -38,11 +38,9 @@ export const RegisterPage = () => {
         sx={{
           display: "flex",
           flexDirection: "column",
-          height: "100vh",
           width: "240px",
           alignItems: "center",
           gap: 2,
-          justifyContent: "center",
         }}
       >
         <Typography> Skapa användare</Typography>
