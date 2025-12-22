@@ -1,4 +1,4 @@
-import { ScoreTable } from "../components/ScoreTable";
+import { ScoreTable } from "../components/ScoreTable/ScoreTable";
 
 export const GamePage = () => {
   return (
