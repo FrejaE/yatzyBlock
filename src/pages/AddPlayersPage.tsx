@@ -2,19 +2,43 @@ import { useNavigate } from "react-router-dom";
 import { HeroButton } from "../components/Buttons";
 import { Box, IconButton, Typography } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useUser } from "../context/UserContext";
 
-export const AddPlayersPage = () => {
-  const [players, setPlayers] = useState(["Spelare 1", "Spelare 2"]);
-  const { user } = useUser();
-  const [names, setNames] = useState([user?.username ?? "", ""]);
+type PlayerInput = {
+  id: string;
+  name: string;
+};
 
+export const AddPlayersPage = () => {
+  const { user } = useUser();
   const navigate = useNavigate();
+  const [players, setPlayers] = useState<PlayerInput[]>([
+    {
+      id: crypto.randomUUID(),
+      name: user?.username ?? "",
+    },
+    {
+      id: crypto.randomUUID(),
+      name: "",
+    },
+  ]);
 
   const addPlayer = () => {
-    setPlayers([...players, `Spelare ${players.length + 1}`]);
-    setNames([...names, ""]);
+    if (players.length >= 6) return;
+
+    setPlayers([...players, { id: crypto.randomUUID(), name: "" }]);
+  };
+
+  const handleStart = () => {
+    // TODO : Bättre variabelnamn????
+    // TODO : Byt ut alert tll modal
+    const emptyFields = players.filter((p) => p.name.trim() !== "");
+    if (emptyFields.length < 2) {
+      alert("Minst två spelare krävs");
+      return;
+    }
+    navigate("/game", { state: { players: emptyFields } });
   };
 
   return (
@@ -28,20 +52,21 @@ export const AddPlayersPage = () => {
         justifyContent: "center",
       }}
     >
-      {players.map((label, index) => (
+      {players.map((player, index) => (
         <Box key={index} sx={{ display: "flex", flexDirection: "column" }}>
           <label style={{ marginBottom: "6px", color: "#4A4A4A" }}>
-            {label}
+            Spelare {index + 1}
           </label>
+
           <input
             type="text"
-            value={names[index]}
+            value={player.name}
             readOnly={index === 0 && !!user}
             // TODO : fundera på om user ska ha readonly eller inte?? man kanske vill ändra
             onChange={(e) => {
-              const clone = [...names];
-              clone[index] = e.target.value;
-              setNames(clone);
+              const clone = [...players];
+              clone[index] = { ...clone[index], name: e.target.value };
+              setPlayers(clone);
             }}
             style={{
               padding: "10px 14px",
@@ -71,7 +96,7 @@ export const AddPlayersPage = () => {
 
       <HeroButton
         variant="contained"
-        onClick={() => navigate("/game")}
+        onClick={handleStart}
         fullWidth
         sx={{
           width: "240px",
