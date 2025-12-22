@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { HeroButton } from "../components/Buttons";
-import { Podium } from "../components/Podium";
+import { WinnersPodium } from "../components/WinnersPodium";
 
 export const HomePage = () => {
   const navigate = useNavigate();
@@ -34,7 +34,7 @@ export const HomePage = () => {
           Spelregler
         </HeroButton>
       </Box>
-      <Podium />
+      <WinnersPodium />
     </>
   );
 };
