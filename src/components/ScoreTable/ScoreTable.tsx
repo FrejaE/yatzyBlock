@@ -14,6 +14,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import { ResultModal, type ResultPlayer } from "../ResultModal";
 import { validateScore } from "../../utils/socreRules";
+import { ScoreCell } from "./ScoreCell";
 
 const upperCategories = ["Ettor", "Tvåor", "Treor", "Fyror", "Femmor", "Sexor"];
 const lowerCategories = [
@@ -80,7 +81,6 @@ export const ScoreTable = () => {
     setErrors((prev) => ({ ...prev, [key]: !isValid }));
     if (!isValid) return;
 
-    // 0 = scratched
     const scratched = points === 0;
 
     setScores((prev) => {
@@ -178,45 +178,23 @@ export const ScoreTable = () => {
             <TableRow key={upperCat}>
               <TableCell sx={{ padding: "4px" }}>{upperCat}</TableCell>
 
-              {/* varje spelares input */}
               {players.map((p) => {
                 const errorKey = `${p.id}-${upperCat}`;
                 return (
-                  <TableCell key={p.id} sx={{ padding: "4px" }}>
-                    <TextField
-                      error={errors[errorKey]}
-                      helperText={errors[errorKey] ? "För högt värde" : " "}
-                      type="text"
-                      inputProps={{
-                        inputMode: "numeric",
-                        pattern: "[0-9]*",
-                      }}
-                      variant="standard"
-                      InputProps={{
-                        disableUnderline: true,
-                        sx: {
-                          padding: 0,
-                          width: "40px",
-                          textAlign: "center",
-                          border: "1px solid #ccc",
-                          borderRadius: "4px",
-                          background: "#fff",
-                          fontSize: "0.9rem",
-                        },
-                      }}
-                      value={handleValue(p.id, upperCat)}
-                      onChange={(e) =>
-                        handleChange(e.target.value, upperCat, p.id)
-                      }
-                    />
-                  </TableCell>
+                  <ScoreCell
+                    key={p.id}
+                    playerId={p.id}
+                    category={upperCat}
+                    value={handleValue(p.id, upperCat)}
+                    error={errors[errorKey]}
+                    onChange={(value) => handleChange(value, upperCat, p.id)}
+                  />
                 );
               })}
             </TableRow>
           ))}
         </TableBody>
 
-        {/* här slutar övre sektion */}
         {/* bonus och summa */}
         <TableBody>
           <TableRow>
@@ -288,7 +266,7 @@ export const ScoreTable = () => {
             ))}
           </TableRow>
         </TableBody>
-
+        {/* nedre sektionen */}
         <TableBody>
           {lowerCategories.map((lowCat) => (
             <TableRow key={lowCat}>
@@ -297,34 +275,14 @@ export const ScoreTable = () => {
               {players.map((p) => {
                 const errorKey = `${p.id}-${lowCat}`;
                 return (
-                  <TableCell key={p.id} sx={{ padding: "4px" }}>
-                    <TextField
-                      error={errors[errorKey]}
-                      helperText={errors[errorKey] ? "För högt värde" : " "}
-                      type="text"
-                      inputProps={{
-                        inputMode: "numeric",
-                        pattern: "[0-9]*",
-                      }}
-                      variant="standard"
-                      InputProps={{
-                        disableUnderline: true,
-                        sx: {
-                          padding: 0,
-                          width: "40px",
-                          textAlign: "center",
-                          border: "1px solid #ccc",
-                          borderRadius: "4px",
-                          background: "#fff",
-                          fontSize: "0.9rem",
-                        },
-                      }}
-                      value={handleValue(p.id, lowCat)}
-                      onChange={(e) =>
-                        handleChange(e.target.value, lowCat, p.id)
-                      }
-                    />
-                  </TableCell>
+                  <ScoreCell
+                    key={p.id}
+                    playerId={p.id}
+                    category={lowCat}
+                    value={handleValue(p.id, lowCat)}
+                    error={errors[errorKey]}
+                    onChange={(value) => handleChange(value, lowCat, p.id)}
+                  />
                 );
               })}
             </TableRow>
