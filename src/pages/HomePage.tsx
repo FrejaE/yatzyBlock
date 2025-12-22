@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { HeroButton } from "../components/Buttons";
+import { Podium } from "../components/Podium";
 
 export const HomePage = () => {
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ export const HomePage = () => {
           Spelregler
         </HeroButton>
       </Box>
-      {/* <WinnersPodium /> komponent vara här  */}
+      <Podium />
     </>
   );
 };
