@@ -12,16 +12,16 @@ export const HomePage = () => {
         sx={{
           display: "flex",
           flexDirection: "column",
-          alignItems: "center",
           gap: 2,
-          justifyContent: "center",
-          width: "200px",
+          margin: "auto",
+          //   width: "200px",
+          flex: 1,
         }}
       >
         <HeroButton
           variant="contained"
           onClick={() => navigate("/add-players")}
-          fullWidth
+          sx={{ width: "200px", margin: "auto" }}
         >
           {" "}
           Börja nytt spel{" "}
@@ -29,12 +29,16 @@ export const HomePage = () => {
         <HeroButton
           variant="contained"
           onClick={() => navigate("/rules")}
-          fullWidth
+          sx={{ width: "200px", margin: "auto" }}
         >
           Spelregler
         </HeroButton>
+        <HeroButton variant="contained" sx={{ width: "200px", margin: "auto" }}>
+          {" "}
+          Logga ut{" "}
+        </HeroButton>
+        <WinnersPodium />
       </Box>
-      <WinnersPodium />
     </>
   );
 };

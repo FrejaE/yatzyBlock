@@ -30,9 +30,12 @@ export const WinnersPodium = () => {
     <Box
       sx={{
         display: "flex",
-        justifyContent: "center",
         alignItems: "flex-end",
         mt: 4,
+        width: "100%",
+        justifyContent: "center",
+        position: "absolute",
+        bottom: 40,
       }}
     >
       {positions.map(({ rank, height, color }) => {
@@ -49,7 +52,6 @@ export const WinnersPodium = () => {
               textAlign: "center",
               p: 1,
               boxShadow: 3,
-              //   mx: 1,
             }}
           >
             <Typography variant="h6">{player.totalScore} p</Typography>
