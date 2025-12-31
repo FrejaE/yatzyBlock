@@ -1,8 +1,9 @@
 import { Box, TextField, Typography, Link } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { PrimaryButton } from "../components/Buttons";
 import { useUser } from "../context/UserContext";
 import { useState } from "react";
+import { AppButton } from "../components/Buttons";
+import { PasswordField } from "../components/PasswordField";
 
 export const RegisterPage = () => {
   const [email, setEmail] = useState("");
@@ -52,6 +53,7 @@ export const RegisterPage = () => {
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          fullWidth
         />
         <TextField
           id="username"
@@ -59,22 +61,21 @@ export const RegisterPage = () => {
           variant="outlined"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
+          fullWidth
         />
-        <TextField
-          id="outlined-password-input"
-          label="Lösenord"
-          type="password"
+        <PasswordField
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={setPassword}
           autoComplete="new-password"
         />
-        <PrimaryButton
+
+        <AppButton
           variant="contained"
-          fullWidth
+          color="primary"
           onClick={() => handleRegister(email, username, password)}
         >
           Skapa användare
-        </PrimaryButton>
+        </AppButton>
         <Typography variant="body2">
           Redan medlem
           <Link onClick={() => navigate("/login")}>Logga in</Link>

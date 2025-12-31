@@ -15,6 +15,7 @@ import { useUser } from "../../context/UserContext";
 import { ResultModal, type ResultPlayer } from "../ResultModal";
 import { validateScore } from "../../utils/socreRules";
 import { ScoreCell } from "./ScoreCell";
+import { AppButton } from "../Buttons";
 
 const upperCategories = ["Ettor", "Tvåor", "Treor", "Fyror", "Femmor", "Sexor"];
 const lowerCategories = [
@@ -289,15 +290,19 @@ export const ScoreTable = () => {
           ))}
         </TableBody>
       </Table>
-      <Button
+      <AppButton
         variant="contained"
         color="primary"
         onClick={handleFinishGame}
-        sx={{ mt: 2 }}
+        sx={{
+          mt: 2,
+          width: "240px",
+          marginBottom: "40px",
+        }}
       >
         {" "}
         Se resultat{" "}
-      </Button>
+      </AppButton>
       <ResultModal
         open={showResult}
         results={results}

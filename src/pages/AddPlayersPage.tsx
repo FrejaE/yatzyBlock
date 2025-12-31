@@ -1,9 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import { HeroButton } from "../components/Buttons";
 import { Box, IconButton, Typography } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { useState } from "react";
 import { useUser } from "../context/UserContext";
+import "../styles/styles.css";
+import { AppButton } from "../components/Buttons";
 
 type PlayerInput = {
   id: string;
@@ -59,6 +60,7 @@ export const AddPlayersPage = () => {
           </label>
 
           <input
+            className="playerInput"
             type="text"
             value={player.name}
             readOnly={index === 0 && !!user}
@@ -67,15 +69,6 @@ export const AddPlayersPage = () => {
               const clone = [...players];
               clone[index] = { ...clone[index], name: e.target.value };
               setPlayers(clone);
-            }}
-            style={{
-              padding: "10px 14px",
-              borderRadius: "8px",
-              border: "none",
-              backgroundColor: "white",
-              fontSize: "1rem",
-              height: "28px",
-              width: "226px",
             }}
           />
         </Box>
@@ -86,26 +79,24 @@ export const AddPlayersPage = () => {
         sx={{ padding: 0 }}
         aria-label="plus icon"
       >
-        <AddCircleIcon
-          sx={{ color: "#E45343", width: "65px", height: "65px" }}
-        />
+        <AddCircleIcon sx={{ color: "#E45343", width: 72, height: 72 }} />
       </IconButton>
       <Typography variant="h6" gutterBottom color="#4A4A4A">
         Lägg till fler spelare
       </Typography>
 
-      <HeroButton
+      <AppButton
         variant="contained"
+        color="error"
         onClick={handleStart}
-        fullWidth
+        // fullWidth
         sx={{
           width: "240px",
         }}
         aria-label="Tryck för att starta spel"
       >
-        {" "}
         Starta spelet
-      </HeroButton>
+      </AppButton>
     </Box>
   );
 };

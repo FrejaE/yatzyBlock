@@ -48,7 +48,7 @@ export const WinnersPodium = () => {
               width: rank === 1 ? 100 : 90,
               height,
               backgroundColor: color,
-              borderRadius: 2,
+              borderRadius: 1,
               textAlign: "center",
               p: 1,
               boxShadow: 3,
