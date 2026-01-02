@@ -40,6 +40,7 @@ export const ScoreTable = () => {
   const [showResult, setShowResult] = useState(false);
   const [results, setResults] = useState<ResultPlayer[]>([]);
   const [errors, setErrors] = useState<Record<string, boolean>>({});
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const players = location.state?.players as Player[];
@@ -141,23 +142,29 @@ export const ScoreTable = () => {
   };
 
   const handleFinishGame = async () => {
-    const results = players.map((p) => ({
-      name: p.name,
-      totalScore: handleTotal(p.id),
-    }));
-    console.log("RESULTAT:", results);
+    setLoading(true);
+    try {
+      const results = players.map((p) => ({
+        name: p.name,
+        totalScore: handleTotal(p.id),
+      }));
 
-    // await fetch("http://localhost:1337/games", {
-    await fetch("https://yatzyblock.onrender.com/games", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        createdBy: user?.id,
-        players: results,
-      }),
-    });
-    setResults(results);
-    setShowResult(true);
+      // await fetch("http://localhost:1337/games", {
+      await fetch("https://yatzyblock.onrender.com/games", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          createdBy: user?.id,
+          players: results,
+        }),
+      });
+      setResults(results);
+      setShowResult(true);
+    } catch (error) {
+      console.error("Fel vid sparande av spel", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -302,8 +309,7 @@ export const ScoreTable = () => {
           marginBottom: "40px",
         }}
       >
-        {" "}
-        Se resultat{" "}
+        {loading ? "Beräknar resultat..." : "Se resultat"}
       </AppButton>
       <ResultModal
         open={showResult}
