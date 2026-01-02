@@ -40,12 +40,12 @@ export const RegisterPage = () => {
         sx={{
           display: "flex",
           flexDirection: "column",
-          width: "240px",
+          //   width: "100%",
           alignItems: "center",
           gap: 2,
         }}
       >
-        <Typography> Skapa användare</Typography>
+        <Typography variant="h6"> Skapa användare</Typography>
         {/* TODO : Rätt typo här, storlek */}
         <TextField
           id="email"
@@ -78,8 +78,7 @@ export const RegisterPage = () => {
           Skapa användare
         </AppButton>
         <Typography variant="body2">
-          Redan medlem
-          <Link onClick={() => navigate("/")}>Logga in</Link>
+          Redan medlem <Link onClick={() => navigate("/")}>Logga in </Link>
         </Typography>
       </Box>
     </>

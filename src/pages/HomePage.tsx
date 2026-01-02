@@ -2,9 +2,16 @@ import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { WinnersPodium } from "../components/WinnersPodium";
 import { AppButton } from "../components/Buttons";
+import { useUser } from "../context/UserContext";
 
 export const HomePage = () => {
+  const { logout } = useUser();
   const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
 
   return (
     <>
@@ -39,6 +46,7 @@ export const HomePage = () => {
           variant="contained"
           color="error"
           sx={{ width: "200px", margin: "auto" }}
+          onClick={handleLogout}
         >
           {" "}
           Logga ut{" "}

@@ -1,4 +1,4 @@
-import { Box, Link, TextField, Typography } from "@mui/material";
+import { Box, Link, Paper, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../context/UserContext";
@@ -41,12 +41,12 @@ export const LoginPage = () => {
         sx={{
           display: "flex",
           flexDirection: "column",
-          width: "240px",
-          alignItems: "center",
           gap: 2,
+          alignItems: "center",
         }}
       >
-        <h1> Välkommen till YatzyBlock</h1>
+        <Typography variant="h6"> Välkommen till YatzyBlock</Typography>
+
         <TextField
           id="outlined-basic"
           label="Användarnamn"
@@ -66,6 +66,7 @@ export const LoginPage = () => {
           color="primary"
           aria-label="Logga in och gå vidare till startsida"
           onClick={() => handleLogin(username, password)}
+          fullWidth
         >
           Logga in
         </AppButton>
@@ -75,11 +76,12 @@ export const LoginPage = () => {
           color="secondary"
           onClick={handleGuest}
           aria-label="Fortsätt som gäst och gå till startsida"
+          fullWidth
         >
           Fortsätt som gäst{" "}
         </AppButton>
         <Typography variant="body2">
-          Har du inget konto?
+          Har du inget konto?{" "}
           <Link
             onClick={() => navigate("/register")}
             aria-label="Gå till sidan för att skapa en användare"
