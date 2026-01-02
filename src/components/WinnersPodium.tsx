@@ -15,7 +15,8 @@ export const WinnersPodium = () => {
   ];
   useEffect(() => {
     const fetchPodium = async () => {
-      const res = await fetch("http://localhost:1337/highscore");
+      //   const res = await fetch("http://localhost:1337/highscore");
+      const res = await fetch("https://yatzyblock.onrender.com/highscore");
       const data = await res.json();
 
       const sorted = data

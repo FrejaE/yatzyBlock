@@ -13,7 +13,8 @@ export const LoginPage = () => {
   const navigate = useNavigate();
 
   const handleLogin = async (username: string, password: string) => {
-    const res = await fetch("http://localhost:1337/auth/login", {
+    // const res = await fetch("http://localhost:1337/auth/login", {
+    const res = await fetch("https://yatzyblock.onrender.com/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password }),
@@ -26,13 +27,13 @@ export const LoginPage = () => {
 
     const user = await res.json();
     login(user);
-    navigate("/");
+    navigate("/home");
   };
 
   const handleGuest = () => {
     const guest = loginAsGuest();
     console.log("loggade in som gäst", guest);
-    navigate("/");
+    navigate("/home");
   };
   return (
     <>

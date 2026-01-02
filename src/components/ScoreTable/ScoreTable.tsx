@@ -1,5 +1,5 @@
 import {
-  Button,
+  //   Button,
   Table,
   TableBody,
   TableCell,
@@ -52,6 +52,7 @@ export const ScoreTable = () => {
     }
   }, [players, navigate]);
 
+  //   TODO : ändra från div till mui
   if (!players) {
     return <div>Omdirigerar...</div>;
   }
@@ -146,7 +147,8 @@ export const ScoreTable = () => {
     }));
     console.log("RESULTAT:", results);
 
-    await fetch("http://localhost:1337/games", {
+    // await fetch("http://localhost:1337/games", {
+    await fetch("https://yatzyblock.onrender.com/games", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -307,7 +309,7 @@ export const ScoreTable = () => {
         open={showResult}
         results={results}
         onClose={() => setShowResult(false)}
-        onGoHome={() => navigate("/")}
+        onGoHome={() => navigate("/home")}
       />
     </>
   );

@@ -17,7 +17,8 @@ export const RegisterPage = () => {
     username: string,
     password: string
   ) => {
-    const res = await fetch("http://localhost:1337/auth/register", {
+    // const res = await fetch("http://localhost:1337/auth/register", {
+    const res = await fetch("https://yatzyblock.onrender.com/auth/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, username, password }),
@@ -30,7 +31,7 @@ export const RegisterPage = () => {
     const user = await res.json();
     login(user);
     console.log("loggade in som user", user);
-    navigate("/");
+    navigate("/home");
   };
 
   return (
@@ -78,7 +79,7 @@ export const RegisterPage = () => {
         </AppButton>
         <Typography variant="body2">
           Redan medlem
-          <Link onClick={() => navigate("/login")}>Logga in</Link>
+          <Link onClick={() => navigate("/")}>Logga in</Link>
         </Typography>
       </Box>
     </>
