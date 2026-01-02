@@ -15,7 +15,8 @@ export const WinnersPodium = () => {
   ];
   useEffect(() => {
     const fetchPodium = async () => {
-      const res = await fetch("http://localhost:1337/highscore");
+      //   const res = await fetch("http://localhost:1337/highscore");
+      const res = await fetch("https://yatzyblock.onrender.com/highscore");
       const data = await res.json();
 
       const sorted = data
@@ -48,7 +49,7 @@ export const WinnersPodium = () => {
               width: rank === 1 ? 100 : 90,
               height,
               backgroundColor: color,
-              borderRadius: 2,
+              borderRadius: 1,
               textAlign: "center",
               p: 1,
               boxShadow: 3,

@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Paper } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import { Header } from "../components/Header";
 
@@ -18,17 +18,16 @@ export const AuthLayout = () => {
         <Header />
         <Box
           sx={{
-            width: {
-              xs: "260px",
-              sm: "320px",
-              md: "420px",
-            },
+            flex: 1,
             display: "flex",
-            flexDirection: "column",
-            gap: 2,
+            justifyContent: "center",
+            alignItems: "center",
+            p: 2,
           }}
         >
-          <Outlet />
+          <Paper sx={{ maxWidth: 328, width: "100%", p: 3 }}>
+            <Outlet />
+          </Paper>
         </Box>
       </Box>
     </>

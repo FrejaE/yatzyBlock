@@ -1,10 +1,17 @@
 import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { HeroButton } from "../components/Buttons";
 import { WinnersPodium } from "../components/WinnersPodium";
+import { AppButton } from "../components/Buttons";
+import { useUser } from "../context/UserContext";
 
 export const HomePage = () => {
+  const { logout } = useUser();
   const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
 
   return (
     <>
@@ -18,25 +25,32 @@ export const HomePage = () => {
           flex: 1,
         }}
       >
-        <HeroButton
+        <AppButton
           variant="contained"
+          color="primary"
           onClick={() => navigate("/add-players")}
           sx={{ width: "200px", margin: "auto" }}
         >
           {" "}
           Börja nytt spel{" "}
-        </HeroButton>
-        <HeroButton
+        </AppButton>
+        <AppButton
           variant="contained"
+          color="secondary"
           onClick={() => navigate("/rules")}
           sx={{ width: "200px", margin: "auto" }}
         >
           Spelregler
-        </HeroButton>
-        <HeroButton variant="contained" sx={{ width: "200px", margin: "auto" }}>
+        </AppButton>
+        <AppButton
+          variant="contained"
+          color="error"
+          sx={{ width: "200px", margin: "auto" }}
+          onClick={handleLogout}
+        >
           {" "}
           Logga ut{" "}
-        </HeroButton>
+        </AppButton>
         <WinnersPodium />
       </Box>
     </>

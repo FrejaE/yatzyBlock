@@ -1,0 +1,9 @@
+.playerInput {
+  padding: 14px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background-color: white;
+  font-size: 1rem;
+  height: 32px;
+  width: 226px;
+}

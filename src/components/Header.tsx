@@ -17,7 +17,6 @@ export const Header = () => {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          color: "white",
           justifyContent: "center",
         }}
       >
@@ -45,7 +44,7 @@ export const Header = () => {
             }}
           />
         </Box>
-        <Typography variant="h6" gutterBottom color="#E45343" fontSize="3rem">
+        <Typography variant="h1" gutterBottom>
           YatzyBlock
         </Typography>
       </Box>

@@ -1,8 +1,9 @@
 import { Box, TextField, Typography, Link } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { PrimaryButton } from "../components/Buttons";
 import { useUser } from "../context/UserContext";
 import { useState } from "react";
+import { AppButton } from "../components/Buttons";
+import { PasswordField } from "../components/PasswordField";
 
 export const RegisterPage = () => {
   const [email, setEmail] = useState("");
@@ -16,7 +17,8 @@ export const RegisterPage = () => {
     username: string,
     password: string
   ) => {
-    const res = await fetch("http://localhost:1337/auth/register", {
+    // const res = await fetch("http://localhost:1337/auth/register", {
+    const res = await fetch("https://yatzyblock.onrender.com/auth/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, username, password }),
@@ -29,7 +31,7 @@ export const RegisterPage = () => {
     const user = await res.json();
     login(user);
     console.log("loggade in som user", user);
-    navigate("/");
+    navigate("/home");
   };
 
   return (
@@ -38,12 +40,12 @@ export const RegisterPage = () => {
         sx={{
           display: "flex",
           flexDirection: "column",
-          width: "240px",
+          //   width: "100%",
           alignItems: "center",
           gap: 2,
         }}
       >
-        <Typography> Skapa användare</Typography>
+        <Typography variant="h6"> Skapa användare</Typography>
         {/* TODO : Rätt typo här, storlek */}
         <TextField
           id="email"
@@ -52,6 +54,7 @@ export const RegisterPage = () => {
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          fullWidth
         />
         <TextField
           id="username"
@@ -59,25 +62,23 @@ export const RegisterPage = () => {
           variant="outlined"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
+          fullWidth
         />
-        <TextField
-          id="outlined-password-input"
-          label="Lösenord"
-          type="password"
+        <PasswordField
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={setPassword}
           autoComplete="new-password"
         />
-        <PrimaryButton
+
+        <AppButton
           variant="contained"
-          fullWidth
+          color="primary"
           onClick={() => handleRegister(email, username, password)}
         >
           Skapa användare
-        </PrimaryButton>
+        </AppButton>
         <Typography variant="body2">
-          Redan medlem
-          <Link onClick={() => navigate("/login")}>Logga in</Link>
+          Redan medlem <Link onClick={() => navigate("/")}>Logga in </Link>
         </Typography>
       </Box>
     </>

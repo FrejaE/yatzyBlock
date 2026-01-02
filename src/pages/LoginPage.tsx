@@ -1,32 +1,20 @@
-import {
-  Box,
-  FormControl,
-  IconButton,
-  InputAdornment,
-  InputLabel,
-  Link,
-  OutlinedInput,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Link, Paper, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { PrimaryButton, SecondaryButton } from "../components/Buttons";
 import { useUser } from "../context/UserContext";
+import { AppButton } from "../components/Buttons";
+import { PasswordField } from "../components/PasswordField";
 
 export const LoginPage = () => {
-  const [showPassword, setShowPassword] = useState(false);
   const { loginAsGuest, login } = useUser();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
   const navigate = useNavigate();
 
   const handleLogin = async (username: string, password: string) => {
-    const res = await fetch("http://localhost:1337/auth/login", {
+    // const res = await fetch("http://localhost:1337/auth/login", {
+    const res = await fetch("https://yatzyblock.onrender.com/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password }),
@@ -39,13 +27,13 @@ export const LoginPage = () => {
 
     const user = await res.json();
     login(user);
-    navigate("/");
+    navigate("/home");
   };
 
   const handleGuest = () => {
     const guest = loginAsGuest();
     console.log("loggade in som gäst", guest);
-    navigate("/");
+    navigate("/home");
   };
   return (
     <>
@@ -53,12 +41,12 @@ export const LoginPage = () => {
         sx={{
           display: "flex",
           flexDirection: "column",
-          width: "240px",
-          alignItems: "center",
           gap: 2,
+          alignItems: "center",
         }}
       >
-        <h1> Välkommen till YatzyBlock</h1>
+        <Typography variant="h6"> Välkommen till YatzyBlock</Typography>
+
         <TextField
           id="outlined-basic"
           label="Användarnamn"
@@ -67,51 +55,33 @@ export const LoginPage = () => {
           onChange={(e) => setUsername(e.target.value)}
           fullWidth
         />
-        <FormControl sx={{ m: 1, width: "auto" }} variant="outlined">
-          <InputLabel htmlFor="outlined-adornment-password">
-            Lösenord
-          </InputLabel>
-          <OutlinedInput
-            sx={{ width: "240px" }}
-            id="outlined-adornment-password"
-            type={showPassword ? "text" : "password"}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            autoComplete="current-password"
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label={showPassword ? "göm lösenord" : "visa lösenord"}
-                  onClick={handleClickShowPassword}
-                  edge="end"
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            }
-            label="Password"
-          />
-        </FormControl>
+        <PasswordField
+          value={password}
+          onChange={setPassword}
+          autoComplete="current-password"
+        />
 
-        <PrimaryButton
+        <AppButton
           variant="contained"
-          fullWidth
+          color="primary"
           aria-label="Logga in och gå vidare till startsida"
           onClick={() => handleLogin(username, password)}
+          fullWidth
         >
           Logga in
-        </PrimaryButton>
+        </AppButton>
         <Typography> eller </Typography>
-        <SecondaryButton
-          variant="outlined"
-          fullWidth
+        <AppButton
+          variant="contained"
+          color="secondary"
           onClick={handleGuest}
           aria-label="Fortsätt som gäst och gå till startsida"
+          fullWidth
         >
           Fortsätt som gäst{" "}
-        </SecondaryButton>
+        </AppButton>
         <Typography variant="body2">
-          Har du inget konto?
+          Har du inget konto?{" "}
           <Link
             onClick={() => navigate("/register")}
             aria-label="Gå till sidan för att skapa en användare"

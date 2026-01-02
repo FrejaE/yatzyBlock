@@ -1,5 +1,5 @@
 import {
-  Button,
+  //   Button,
   Table,
   TableBody,
   TableCell,
@@ -15,6 +15,7 @@ import { useUser } from "../../context/UserContext";
 import { ResultModal, type ResultPlayer } from "../ResultModal";
 import { validateScore } from "../../utils/socreRules";
 import { ScoreCell } from "./ScoreCell";
+import { AppButton } from "../Buttons";
 
 const upperCategories = ["Ettor", "Tvåor", "Treor", "Fyror", "Femmor", "Sexor"];
 const lowerCategories = [
@@ -51,6 +52,7 @@ export const ScoreTable = () => {
     }
   }, [players, navigate]);
 
+  //   TODO : ändra från div till mui
   if (!players) {
     return <div>Omdirigerar...</div>;
   }
@@ -145,7 +147,8 @@ export const ScoreTable = () => {
     }));
     console.log("RESULTAT:", results);
 
-    await fetch("http://localhost:1337/games", {
+    // await fetch("http://localhost:1337/games", {
+    await fetch("https://yatzyblock.onrender.com/games", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -289,20 +292,24 @@ export const ScoreTable = () => {
           ))}
         </TableBody>
       </Table>
-      <Button
+      <AppButton
         variant="contained"
         color="primary"
         onClick={handleFinishGame}
-        sx={{ mt: 2 }}
+        sx={{
+          mt: 2,
+          width: "240px",
+          marginBottom: "40px",
+        }}
       >
         {" "}
         Se resultat{" "}
-      </Button>
+      </AppButton>
       <ResultModal
         open={showResult}
         results={results}
         onClose={() => setShowResult(false)}
-        onGoHome={() => navigate("/")}
+        onGoHome={() => navigate("/home")}
       />
     </>
   );

@@ -23,5 +23,5 @@ export const calcBonus = (total: number) => {
     return 0;
   }
 };
-
+// todo : läff till total logik här
 export const calcTotal = () => {};
