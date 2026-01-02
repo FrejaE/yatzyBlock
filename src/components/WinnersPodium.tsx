@@ -1,5 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
+import { Loader } from "./Loader";
 
 type PodiumPlayer = {
   name: string;
@@ -8,6 +9,7 @@ type PodiumPlayer = {
 
 export const WinnersPodium = () => {
   const [podium, setPodium] = useState<PodiumPlayer[]>([]);
+  const [loading, setLoading] = useState(false);
   const positions = [
     { rank: 2, height: 120, color: "#C0C0C0" },
     { rank: 1, height: 160, color: "#FFD700" },
@@ -15,18 +17,46 @@ export const WinnersPodium = () => {
   ];
   useEffect(() => {
     const fetchPodium = async () => {
-      //   const res = await fetch("http://localhost:1337/highscore");
-      const res = await fetch("https://yatzyblock.onrender.com/highscore");
-      const data = await res.json();
+      setLoading(true);
+      try {
+        //   const res = await fetch("http://localhost:1337/highscore");
+        const res = await fetch("https://yatzyblock.onrender.com/highscore");
+        if (!res.ok) {
+          throw new Error("Kunde inte hämta highscore");
+        }
+        const data = await res.json();
 
-      const sorted = data
-        .sort((a: PodiumPlayer, b: PodiumPlayer) => b.totalScore - a.totalScore)
-        .slice(0, 3);
+        const sorted = data
+          .sort(
+            (a: PodiumPlayer, b: PodiumPlayer) => b.totalScore - a.totalScore
+          )
+          .slice(0, 3);
 
-      setPodium(sorted);
+        setPodium(sorted);
+      } catch (error) {
+        console.log("Fel vid hämtning av podium", error);
+      } finally {
+        setLoading(false);
+      }
     };
     fetchPodium();
   }, []);
+  if (loading) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: 200,
+          width: "100%",
+        }}
+      >
+        <Loader text="Hämtar topp tre scores.." />
+      </Box>
+    );
+  }
+
   return (
     <Box
       sx={{
