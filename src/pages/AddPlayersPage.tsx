@@ -5,10 +5,17 @@ import { useState } from "react";
 import { useUser } from "../context/UserContext";
 import "../styles/styles.css";
 import { AppButton } from "../components/Buttons";
+import { FeedbackDialog } from "../components/FeedBackDialog";
 
 type PlayerInput = {
   id: string;
   name: string;
+};
+type DialogState = {
+  open: boolean;
+  title: string;
+  message: string;
+  type?: "error" | "warning" | "info";
 };
 
 export const AddPlayersPage = () => {
@@ -24,6 +31,12 @@ export const AddPlayersPage = () => {
       name: "",
     },
   ]);
+  const [dialog, setDialog] = useState<DialogState>({
+    open: false,
+    title: "",
+    message: "",
+    type: "info",
+  });
 
   const addPlayer = () => {
     if (players.length >= 6) return;
@@ -36,7 +49,12 @@ export const AddPlayersPage = () => {
     // TODO : Byt ut alert tll modal
     const emptyFields = players.filter((p) => p.name.trim() !== "");
     if (emptyFields.length < 2) {
-      alert("Minst två spelare krävs");
+      setDialog({
+        open: true,
+        title: "Fler spelare",
+        message: "Minst två spelare för att starta spelet",
+        type: "warning",
+      });
       return;
     }
     navigate("/game", { state: { players: emptyFields } });
@@ -97,6 +115,13 @@ export const AddPlayersPage = () => {
       >
         Starta spelet
       </AppButton>
+      <FeedbackDialog
+        open={dialog.open}
+        title={dialog.title}
+        message={dialog.message}
+        type={dialog.type}
+        onClose={() => setDialog((prev) => ({ ...prev, open: false }))}
+      />
     </Box>
   );
 };
