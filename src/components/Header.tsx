@@ -7,7 +7,7 @@ export const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const hideBAckButtonRoutes = ["/", "/login"];
+  const hideBAckButtonRoutes = ["/", "/home"];
   const showBackButton = !hideBAckButtonRoutes.includes(location.pathname);
   return (
     <>
