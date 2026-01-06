@@ -234,13 +234,21 @@ export const ScoreTable = () => {
                     disableUnderline: true,
                     readOnly: true,
                     sx: {
-                      padding: 0,
                       width: "40px",
-                      textAlign: "center",
                       border: "1px solid #ccc",
                       borderRadius: "4px",
                       background: "#fff",
-                      fontSize: "0.9rem",
+
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+
+                      "& input": {
+                        padding: 0,
+                        height: "100%",
+                        textAlign: "center",
+                        fontSize: "0.9rem",
+                      },
                     },
                   }}
                   value={calculation(p.id, scores, upperCategories)}
@@ -261,22 +269,31 @@ export const ScoreTable = () => {
               >
                 <TextField
                   type="text"
+                  variant="standard"
                   inputProps={{
                     inputMode: "numeric",
                     pattern: "[0-9]*",
                   }}
-                  variant="standard"
                   InputProps={{
                     disableUnderline: true,
                     readOnly: true,
                     sx: {
-                      padding: 0,
                       width: "40px",
                       textAlign: "center",
                       border: "1px solid #ccc",
                       borderRadius: "4px",
                       background: "#fff",
-                      fontSize: "0.9rem",
+
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+
+                      "& input": {
+                        padding: 0,
+                        height: "100%",
+                        textAlign: "center",
+                        fontSize: "0.9rem",
+                      },
                     },
                   }}
                   value={handleBonus(p.id, upperCategories)}
