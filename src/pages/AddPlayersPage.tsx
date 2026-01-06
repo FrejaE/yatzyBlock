@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Box, IconButton, Typography } from "@mui/material";
+import { Box, IconButton, Tooltip, Typography } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { useState } from "react";
 import { useUser } from "../context/UserContext";
@@ -38,8 +38,10 @@ export const AddPlayersPage = () => {
     type: "info",
   });
 
+  const maxPlayersReached = players.length >= 6;
+
   const addPlayer = () => {
-    if (players.length >= 6) return;
+    if (maxPlayersReached) return;
 
     setPlayers([...players, { id: crypto.randomUUID(), name: "" }]);
   };
@@ -64,7 +66,6 @@ export const AddPlayersPage = () => {
       sx={{
         display: "flex",
         flexDirection: "column",
-        // width: "240px",
         alignItems: "center",
         gap: 2,
         justifyContent: "center",
@@ -91,13 +92,28 @@ export const AddPlayersPage = () => {
         </Box>
       ))}
 
-      <IconButton
-        onClick={addPlayer}
-        sx={{ padding: 0 }}
-        aria-label="plus icon"
+      <Tooltip
+        title={maxPlayersReached ? "Max antal spelare uppnått" : ""}
+        arrow
       >
-        <AddCircleIcon sx={{ color: "#E45343", width: 72, height: 72 }} />
-      </IconButton>
+        <span>
+          <IconButton
+            onClick={addPlayer}
+            disabled={maxPlayersReached}
+            sx={{ padding: 0 }}
+            aria-label="Lägg till spelare"
+          >
+            <AddCircleIcon
+              sx={{
+                color: maxPlayersReached ? "grey.400" : "#E45343",
+                width: 72,
+                height: 72,
+              }}
+            />
+          </IconButton>
+        </span>
+      </Tooltip>
+
       <Typography variant="h6" gutterBottom color="#4A4A4A">
         Lägg till fler spelare
       </Typography>
@@ -106,7 +122,6 @@ export const AddPlayersPage = () => {
         variant="contained"
         color="error"
         onClick={handleStart}
-        // fullWidth
         sx={{
           width: "240px",
         }}
