@@ -6,6 +6,7 @@ import {
   TableHead,
   TableRow,
   TextField,
+  Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import type { Player, Score } from "../../models/Player";
@@ -55,7 +56,7 @@ export const ScoreTable = () => {
 
   //   TODO : ändra från div till mui
   if (!players) {
-    return <div>Omdirigerar...</div>;
+    return <Typography variant="h6">Omdirigerar...</Typography>;
   }
   useEffect(() => {
     console.log("SCORES", scores);
@@ -176,7 +177,7 @@ export const ScoreTable = () => {
       >
         <TableHead>
           <TableRow>
-            <TableCell sx={{ padding: "4px" }}> Spelare </TableCell>
+            <TableCell sx={{ paddingLeft: "8px" }}> Spelare </TableCell>
             {players.map((p) => (
               <TableCell key={p.id}>{p.name}</TableCell>
             ))}
@@ -186,7 +187,15 @@ export const ScoreTable = () => {
         <TableBody>
           {upperCategories.map((upperCat) => (
             <TableRow key={upperCat}>
-              <TableCell sx={{ padding: "4px" }}>{upperCat}</TableCell>
+              <TableCell
+                sx={{
+                  padding: "4px 8px",
+                  verticalAlign: "middle",
+                  lineHeight: 1.2,
+                }}
+              >
+                {upperCat}
+              </TableCell>
 
               {players.map((p) => {
                 const errorKey = `${p.id}-${upperCat}`;
@@ -209,14 +218,14 @@ export const ScoreTable = () => {
         <TableBody>
           <TableRow>
             <TableCell
-              sx={{ padding: "4px", borderTop: "2px solid #454545ff" }}
+              sx={{ padding: "4px 8px", borderTop: "2px solid #454545ff" }}
             >
               Total
             </TableCell>
             {players.map((p) => (
               <TableCell
                 key={p.id}
-                sx={{ padding: "4px", borderTop: "2px solid #454545ff" }}
+                sx={{ padding: "2px", borderTop: "2px solid #454545ff" }}
               >
                 <TextField
                   type="number"
@@ -241,7 +250,7 @@ export const ScoreTable = () => {
           </TableRow>
           <TableRow>
             <TableCell
-              sx={{ padding: "4px", borderBottom: "2px solid #454545ff" }}
+              sx={{ padding: "4px 8px", borderBottom: "2px solid #454545ff" }}
             >
               Bonus
             </TableCell>

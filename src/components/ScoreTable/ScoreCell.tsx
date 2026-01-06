@@ -10,16 +10,17 @@ type ScoreCellProps = {
 
 export const ScoreCell = ({ value, onChange, error }: ScoreCellProps) => {
   return (
-    <TableCell sx={{ padding: "4px" }}>
+    <TableCell sx={{ padding: "4px " }}>
       <TextField
         type="text"
+        size="small"
         inputProps={{
           inputMode: "numeric",
           pattern: "[0-9]*",
         }}
         variant="standard"
         error={error}
-        helperText={error ? "För högt värde" : " "}
+        helperText={error ? "För högt värde" : undefined}
         InputProps={{
           disableUnderline: true,
           sx: {
