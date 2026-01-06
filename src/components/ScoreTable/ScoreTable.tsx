@@ -54,7 +54,6 @@ export const ScoreTable = () => {
     }
   }, [players, navigate]);
 
-  //   TODO : ändra från div till mui
   if (!players) {
     return <Typography variant="h6">Omdirigerar...</Typography>;
   }

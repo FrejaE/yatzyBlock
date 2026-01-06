@@ -46,7 +46,6 @@ export const AddPlayersPage = () => {
 
   const handleStart = () => {
     // TODO : Bättre variabelnamn????
-    // TODO : Byt ut alert tll modal
     const emptyFields = players.filter((p) => p.name.trim() !== "");
     if (emptyFields.length < 2) {
       setDialog({
