@@ -176,9 +176,14 @@ export const ScoreTable = () => {
       >
         <TableHead>
           <TableRow>
-            <TableCell sx={{ paddingLeft: "8px" }}> Spelare </TableCell>
+            <TableCell sx={{ paddingLeft: "8px" }} component="th" scope="col">
+              {" "}
+              Spelare{" "}
+            </TableCell>
             {players.map((p) => (
-              <TableCell key={p.id}>{p.name}</TableCell>
+              <TableCell key={p.id} component="th" scope="col">
+                {p.name}
+              </TableCell>
             ))}
           </TableRow>
         </TableHead>
@@ -192,6 +197,8 @@ export const ScoreTable = () => {
                   verticalAlign: "middle",
                   lineHeight: 1.2,
                 }}
+                component="th"
+                scope="row"
               >
                 {upperCat}
               </TableCell>
@@ -201,7 +208,7 @@ export const ScoreTable = () => {
                 return (
                   <ScoreCell
                     key={p.id}
-                    playerId={p.id}
+                    playerName={p.name}
                     category={upperCat}
                     value={handleValue(p.id, upperCat)}
                     error={errors[errorKey]}
@@ -305,14 +312,25 @@ export const ScoreTable = () => {
         <TableBody>
           {lowerCategories.map((lowCat) => (
             <TableRow key={lowCat}>
-              <TableCell sx={{ padding: "4px" }}> {lowCat} </TableCell>
+              <TableCell
+                sx={{
+                  padding: "4px 8px",
+                  verticalAlign: "middle",
+                  lineHeight: 1.2,
+                }}
+                component="th"
+                scope="row"
+              >
+                {" "}
+                {lowCat}{" "}
+              </TableCell>
 
               {players.map((p) => {
                 const errorKey = `${p.id}-${lowCat}`;
                 return (
                   <ScoreCell
                     key={p.id}
-                    playerId={p.id}
+                    playerName={p.name}
                     category={lowCat}
                     value={handleValue(p.id, lowCat)}
                     error={errors[errorKey]}

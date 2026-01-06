@@ -101,11 +101,17 @@ export const AddPlayersPage = () => {
             onClick={addPlayer}
             disabled={maxPlayersReached}
             sx={{ padding: 0 }}
-            aria-label="Lägg till spelare"
+            aria-label={
+              maxPlayersReached
+                ? "Max antal spelare uppnått"
+                : "Lägg till spelare"
+            }
           >
+            {/* TODO : Använd theme */}
             <AddCircleIcon
               sx={{
-                color: maxPlayersReached ? "grey.400" : "#E45343",
+                color: maxPlayersReached ? "action.disabled" : "error.main",
+                opacity: maxPlayersReached ? 0.4 : 1,
                 width: 72,
                 height: 72,
               }}
@@ -114,7 +120,7 @@ export const AddPlayersPage = () => {
         </span>
       </Tooltip>
 
-      <Typography variant="h6" gutterBottom color="#4A4A4A">
+      <Typography variant="h6" gutterBottom color="text.primary">
         Lägg till fler spelare
       </Typography>
 

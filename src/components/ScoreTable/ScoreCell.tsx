@@ -1,17 +1,24 @@
 import { TableCell, TextField } from "@mui/material";
 
 type ScoreCellProps = {
-  playerId: string;
   category: string;
   value: string | number;
   onChange: (value: string) => void;
   error?: boolean;
+  playerName: string;
 };
 
-export const ScoreCell = ({ value, onChange, error }: ScoreCellProps) => {
+export const ScoreCell = ({
+  value,
+  onChange,
+  error,
+  category,
+  playerName,
+}: ScoreCellProps) => {
   return (
     <TableCell sx={{ padding: "4px " }}>
       <TextField
+        aria-label={`Poäng för ${category}, spelare ${playerName}`}
         type="text"
         size="small"
         variant="standard"
