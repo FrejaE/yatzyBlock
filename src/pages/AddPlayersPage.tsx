@@ -6,6 +6,7 @@ import { useUser } from "../context/UserContext";
 import "../styles/styles.css";
 import { AppButton } from "../components/Buttons";
 import { FeedbackDialog } from "../components/FeedBackDialog";
+import { VariantModal } from "../components/VariantModal";
 
 type PlayerInput = {
   id: string;
@@ -37,6 +38,8 @@ export const AddPlayersPage = () => {
     message: "",
     type: "info",
   });
+  const [variantOpen, setVariantOpen] = useState(false);
+  const [selectedPlayers, setSelectedPlayers] = useState<PlayerInput[]>([]);
 
   const maxPlayersReached = players.length >= 6;
 
@@ -47,9 +50,8 @@ export const AddPlayersPage = () => {
   };
 
   const handleStart = () => {
-    // TODO : Bättre variabelnamn????
-    const emptyFields = players.filter((p) => p.name.trim() !== "");
-    if (emptyFields.length < 2) {
+    const filledPlayers = players.filter((p) => p.name.trim() !== "");
+    if (filledPlayers.length < 2) {
       setDialog({
         open: true,
         title: "Fler spelare",
@@ -58,7 +60,9 @@ export const AddPlayersPage = () => {
       });
       return;
     }
-    navigate("/game", { state: { players: emptyFields } });
+    // navigate("/game", { state: { players: filledPlayers } });
+    setSelectedPlayers(filledPlayers);
+    setVariantOpen(true);
   };
 
   return (
@@ -141,6 +145,18 @@ export const AddPlayersPage = () => {
         message={dialog.message}
         type={dialog.type}
         onClose={() => setDialog((prev) => ({ ...prev, open: false }))}
+      />
+      <VariantModal
+        open={variantOpen}
+        onClose={() => setVariantOpen(false)}
+        onSelect={(variant) => {
+          navigate("/game", {
+            state: {
+              players: selectedPlayers,
+              variant,
+            },
+          });
+        }}
       />
     </Box>
   );

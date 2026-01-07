@@ -7,6 +7,7 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
+import { AppButton } from "./Buttons";
 
 export type FeedbackDialogProps = {
   open: boolean;
@@ -45,7 +46,9 @@ export const FeedbackDialog = ({
       </DialogContent>
 
       <DialogActions sx={{ justifyContent: "center" }}>
-        <Button onClick={onClose}>OK</Button>
+        <AppButton variant="contained" onClick={onClose}>
+          OK
+        </AppButton>
       </DialogActions>
     </Dialog>
   );

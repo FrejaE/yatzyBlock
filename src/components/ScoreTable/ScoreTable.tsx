@@ -19,22 +19,6 @@ import { ScoreCell } from "./ScoreCell";
 import { AppButton } from "../Buttons";
 
 const upperCategories = ["Ettor", "Tvåor", "Treor", "Fyror", "Femmor", "Sexor"];
-const lowerCategories = [
-  "Ett par",
-  "Två par",
-  "Tre par",
-  "Triss",
-  "Fyrtal",
-  "Femtal",
-  "Liten stege",
-  "Stor stege",
-  "Full stege",
-  "Kåk",
-  "Hus",
-  "Torn",
-  "Chans",
-  "Yatzy",
-];
 
 export const ScoreTable = () => {
   const [scores, setScores] = useState<Score[]>([]);
@@ -47,12 +31,50 @@ export const ScoreTable = () => {
   const players = location.state?.players as Player[];
   const { user } = useUser();
 
+  const variant = location.state?.variant ?? "maxiYatzy";
+
+  const lowerCategories =
+    variant === "maxiYatzy"
+      ? [
+          "Ett par",
+          "Två par",
+          "Tre par",
+          "Triss",
+          "Fyrtal",
+          "Femtal",
+          "Liten stege",
+          "Stor stege",
+          "Full stege",
+          "Kåk",
+          "Hus",
+          "Torn",
+          "Chans",
+          "Yatzy",
+        ]
+      : [
+          "Ett par",
+          "Två par",
+          "Triss",
+          "Fyrtal",
+          "Liten stege",
+          "Stor stege",
+          "Kåk",
+          "Chans",
+          "Yatzy",
+        ];
+
   // om något går fel och man hamnar på scoretable som är tom
+  //   useEffect(() => {
+  //     if (!players || players.length === 0) {
+  //       navigate("/add-players");
+  //     }
+  //   }, [players, navigate]);
+
   useEffect(() => {
-    if (!players || players.length === 0) {
+    if (!location.state?.players || !location.state?.variant) {
       navigate("/add-players");
     }
-  }, [players, navigate]);
+  }, [location.state, navigate]);
 
   if (!players) {
     return <Typography variant="h6">Omdirigerar...</Typography>;
