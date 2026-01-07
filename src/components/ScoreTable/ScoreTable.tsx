@@ -1,5 +1,4 @@
 import {
-  //   Button,
   Table,
   TableBody,
   TableCell,
@@ -64,12 +63,6 @@ export const ScoreTable = () => {
         ];
 
   // om något går fel och man hamnar på scoretable som är tom
-  //   useEffect(() => {
-  //     if (!players || players.length === 0) {
-  //       navigate("/add-players");
-  //     }
-  //   }, [players, navigate]);
-
   useEffect(() => {
     if (!location.state?.players || !location.state?.variant) {
       navigate("/add-players");
@@ -369,9 +362,11 @@ export const ScoreTable = () => {
         color="primary"
         onClick={handleFinishGame}
         sx={{
+          display: "block",
+          mx: "auto",
           mt: 2,
           width: "240px",
-          marginBottom: "40px",
+          mb: "40px",
         }}
       >
         {loading ? "Beräknar resultat..." : "Se resultat"}
