@@ -1,11 +1,11 @@
 import {
-  //   Button,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableRow,
   TextField,
+  Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import type { Player, Score } from "../../models/Player";
@@ -18,22 +18,6 @@ import { ScoreCell } from "./ScoreCell";
 import { AppButton } from "../Buttons";
 
 const upperCategories = ["Ettor", "Tvåor", "Treor", "Fyror", "Femmor", "Sexor"];
-const lowerCategories = [
-  "Ett par",
-  "Två par",
-  "Tre par",
-  "Triss",
-  "Fyrtal",
-  "Femtal",
-  "Liten stege",
-  "Stor stege",
-  "Full stege",
-  "Kåk",
-  "Hus",
-  "Torn",
-  "Chans",
-  "Yatzy",
-];
 
 export const ScoreTable = () => {
   const [scores, setScores] = useState<Score[]>([]);
@@ -46,20 +30,48 @@ export const ScoreTable = () => {
   const players = location.state?.players as Player[];
   const { user } = useUser();
 
+  const variant = location.state?.variant ?? "maxiYatzy";
+
+  const lowerCategories =
+    variant === "maxiYatzy"
+      ? [
+          "Ett par",
+          "Två par",
+          "Tre par",
+          "Triss",
+          "Fyrtal",
+          "Femtal",
+          "Liten stege",
+          "Stor stege",
+          "Full stege",
+          "Kåk",
+          "Hus",
+          "Torn",
+          "Chans",
+          "Yatzy",
+        ]
+      : [
+          "Ett par",
+          "Två par",
+          "Triss",
+          "Fyrtal",
+          "Liten stege",
+          "Stor stege",
+          "Kåk",
+          "Chans",
+          "Yatzy",
+        ];
+
   // om något går fel och man hamnar på scoretable som är tom
   useEffect(() => {
-    if (!players || players.length === 0) {
+    if (!location.state?.players || !location.state?.variant) {
       navigate("/add-players");
     }
-  }, [players, navigate]);
+  }, [location.state, navigate]);
 
-  //   TODO : ändra från div till mui
   if (!players) {
-    return <div>Omdirigerar...</div>;
+    return <Typography variant="h6">Omdirigerar...</Typography>;
   }
-  useEffect(() => {
-    console.log("SCORES", scores);
-  }, [scores]);
 
   const handleChange = (
     rawValue: string,
@@ -176,9 +188,14 @@ export const ScoreTable = () => {
       >
         <TableHead>
           <TableRow>
-            <TableCell sx={{ padding: "4px" }}> Spelare </TableCell>
+            <TableCell sx={{ paddingLeft: "8px" }} component="th" scope="col">
+              {" "}
+              Spelare{" "}
+            </TableCell>
             {players.map((p) => (
-              <TableCell key={p.id}>{p.name}</TableCell>
+              <TableCell key={p.id} component="th" scope="col">
+                {p.name}
+              </TableCell>
             ))}
           </TableRow>
         </TableHead>
@@ -186,14 +203,24 @@ export const ScoreTable = () => {
         <TableBody>
           {upperCategories.map((upperCat) => (
             <TableRow key={upperCat}>
-              <TableCell sx={{ padding: "4px" }}>{upperCat}</TableCell>
+              <TableCell
+                sx={{
+                  padding: "4px 8px",
+                  verticalAlign: "middle",
+                  lineHeight: 1.2,
+                }}
+                component="th"
+                scope="row"
+              >
+                {upperCat}
+              </TableCell>
 
               {players.map((p) => {
                 const errorKey = `${p.id}-${upperCat}`;
                 return (
                   <ScoreCell
                     key={p.id}
-                    playerId={p.id}
+                    playerName={p.name}
                     category={upperCat}
                     value={handleValue(p.id, upperCat)}
                     error={errors[errorKey]}
@@ -209,14 +236,14 @@ export const ScoreTable = () => {
         <TableBody>
           <TableRow>
             <TableCell
-              sx={{ padding: "4px", borderTop: "2px solid #454545ff" }}
+              sx={{ padding: "4px 8px", borderTop: "2px solid #454545ff" }}
             >
               Total
             </TableCell>
             {players.map((p) => (
               <TableCell
                 key={p.id}
-                sx={{ padding: "4px", borderTop: "2px solid #454545ff" }}
+                sx={{ padding: "2px", borderTop: "2px solid #454545ff" }}
               >
                 <TextField
                   type="number"
@@ -225,13 +252,21 @@ export const ScoreTable = () => {
                     disableUnderline: true,
                     readOnly: true,
                     sx: {
-                      padding: 0,
                       width: "40px",
-                      textAlign: "center",
                       border: "1px solid #ccc",
                       borderRadius: "4px",
                       background: "#fff",
-                      fontSize: "0.9rem",
+
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+
+                      "& input": {
+                        padding: 0,
+                        height: "100%",
+                        textAlign: "center",
+                        fontSize: "0.9rem",
+                      },
                     },
                   }}
                   value={calculation(p.id, scores, upperCategories)}
@@ -241,7 +276,7 @@ export const ScoreTable = () => {
           </TableRow>
           <TableRow>
             <TableCell
-              sx={{ padding: "4px", borderBottom: "2px solid #454545ff" }}
+              sx={{ padding: "4px 8px", borderBottom: "2px solid #454545ff" }}
             >
               Bonus
             </TableCell>
@@ -252,22 +287,31 @@ export const ScoreTable = () => {
               >
                 <TextField
                   type="text"
+                  variant="standard"
                   inputProps={{
                     inputMode: "numeric",
                     pattern: "[0-9]*",
                   }}
-                  variant="standard"
                   InputProps={{
                     disableUnderline: true,
                     readOnly: true,
                     sx: {
-                      padding: 0,
                       width: "40px",
                       textAlign: "center",
                       border: "1px solid #ccc",
                       borderRadius: "4px",
                       background: "#fff",
-                      fontSize: "0.9rem",
+
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+
+                      "& input": {
+                        padding: 0,
+                        height: "100%",
+                        textAlign: "center",
+                        fontSize: "0.9rem",
+                      },
                     },
                   }}
                   value={handleBonus(p.id, upperCategories)}
@@ -280,14 +324,25 @@ export const ScoreTable = () => {
         <TableBody>
           {lowerCategories.map((lowCat) => (
             <TableRow key={lowCat}>
-              <TableCell sx={{ padding: "4px" }}> {lowCat} </TableCell>
+              <TableCell
+                sx={{
+                  padding: "4px 8px",
+                  verticalAlign: "middle",
+                  lineHeight: 1.2,
+                }}
+                component="th"
+                scope="row"
+              >
+                {" "}
+                {lowCat}{" "}
+              </TableCell>
 
               {players.map((p) => {
                 const errorKey = `${p.id}-${lowCat}`;
                 return (
                   <ScoreCell
                     key={p.id}
-                    playerId={p.id}
+                    playerName={p.name}
                     category={lowCat}
                     value={handleValue(p.id, lowCat)}
                     error={errors[errorKey]}
@@ -304,9 +359,11 @@ export const ScoreTable = () => {
         color="primary"
         onClick={handleFinishGame}
         sx={{
+          display: "block",
+          mx: "auto",
           mt: 2,
           width: "240px",
-          marginBottom: "40px",
+          mb: "40px",
         }}
       >
         {loading ? "Beräknar resultat..." : "Se resultat"}

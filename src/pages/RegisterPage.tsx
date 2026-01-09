@@ -30,7 +30,6 @@ export const RegisterPage = () => {
 
     const user = await res.json();
     login(user);
-    console.log("loggade in som user", user);
     navigate("/home");
   };
 
@@ -46,7 +45,6 @@ export const RegisterPage = () => {
         }}
       >
         <Typography variant="h6"> Skapa användare</Typography>
-        {/* TODO : Rätt typo här, storlek */}
         <TextField
           id="email"
           label="Email"

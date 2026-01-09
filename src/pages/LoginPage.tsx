@@ -4,11 +4,25 @@ import { useNavigate } from "react-router-dom";
 import { useUser } from "../context/UserContext";
 import { AppButton } from "../components/Buttons";
 import { PasswordField } from "../components/PasswordField";
+import { FeedbackDialog } from "../components/FeedBackDialog";
+
+type DialogState = {
+  open: boolean;
+  title: string;
+  message: string;
+  type?: "error" | "warning" | "info";
+};
 
 export const LoginPage = () => {
   const { loginAsGuest, login } = useUser();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [dialog, setDialog] = useState<DialogState>({
+    open: false,
+    title: "",
+    message: "",
+    type: "info",
+  });
 
   const navigate = useNavigate();
 
@@ -21,7 +35,12 @@ export const LoginPage = () => {
     });
 
     if (!res.ok) {
-      alert("Fel användarnamn eller lösenord");
+      setDialog({
+        open: true,
+        title: "inloggning misslyckades",
+        message: "Fel användarnamn eller lösenord",
+        type: "error",
+      });
       return;
     }
 
@@ -89,6 +108,13 @@ export const LoginPage = () => {
             Skapa användare
           </Link>
         </Typography>
+        <FeedbackDialog
+          open={dialog.open}
+          title={dialog.title}
+          message={dialog.message}
+          type={dialog.type}
+          onClose={() => setDialog((prev) => ({ ...prev, open: false }))}
+        />
       </Box>
     </>
   );

@@ -1,14 +1,22 @@
 import { useNavigate } from "react-router-dom";
-import { Box, IconButton, Typography } from "@mui/material";
+import { Box, IconButton, Tooltip, Typography } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { useState } from "react";
 import { useUser } from "../context/UserContext";
 import "../styles/styles.css";
 import { AppButton } from "../components/Buttons";
+import { FeedbackDialog } from "../components/FeedBackDialog";
+import { VariantModal } from "../components/VariantModal";
 
 type PlayerInput = {
   id: string;
   name: string;
+};
+type DialogState = {
+  open: boolean;
+  title: string;
+  message: string;
+  type?: "error" | "warning" | "info";
 };
 
 export const AddPlayersPage = () => {
@@ -24,22 +32,37 @@ export const AddPlayersPage = () => {
       name: "",
     },
   ]);
+  const [dialog, setDialog] = useState<DialogState>({
+    open: false,
+    title: "",
+    message: "",
+    type: "info",
+  });
+  const [variantOpen, setVariantOpen] = useState(false);
+  const [selectedPlayers, setSelectedPlayers] = useState<PlayerInput[]>([]);
+
+  const maxPlayersReached = players.length >= 6;
 
   const addPlayer = () => {
-    if (players.length >= 6) return;
+    if (maxPlayersReached) return;
 
     setPlayers([...players, { id: crypto.randomUUID(), name: "" }]);
   };
 
   const handleStart = () => {
-    // TODO : Bättre variabelnamn????
-    // TODO : Byt ut alert tll modal
-    const emptyFields = players.filter((p) => p.name.trim() !== "");
-    if (emptyFields.length < 2) {
-      alert("Minst två spelare krävs");
+    const filledPlayers = players.filter((p) => p.name.trim() !== "");
+    if (filledPlayers.length < 2) {
+      setDialog({
+        open: true,
+        title: "Fler spelare",
+        message: "Minst två spelare för att starta spelet",
+        type: "warning",
+      });
       return;
     }
-    navigate("/game", { state: { players: emptyFields } });
+    // navigate("/game", { state: { players: filledPlayers } });
+    setSelectedPlayers(filledPlayers);
+    setVariantOpen(true);
   };
 
   return (
@@ -47,7 +70,6 @@ export const AddPlayersPage = () => {
       sx={{
         display: "flex",
         flexDirection: "column",
-        // width: "240px",
         alignItems: "center",
         gap: 2,
         justifyContent: "center",
@@ -74,14 +96,34 @@ export const AddPlayersPage = () => {
         </Box>
       ))}
 
-      <IconButton
-        onClick={addPlayer}
-        sx={{ padding: 0 }}
-        aria-label="plus icon"
+      <Tooltip
+        title={maxPlayersReached ? "Max antal spelare uppnått" : ""}
+        arrow
       >
-        <AddCircleIcon sx={{ color: "#E45343", width: 72, height: 72 }} />
-      </IconButton>
-      <Typography variant="h6" gutterBottom color="#4A4A4A">
+        <span>
+          <IconButton
+            onClick={addPlayer}
+            disabled={maxPlayersReached}
+            sx={{ padding: 0 }}
+            aria-label={
+              maxPlayersReached
+                ? "Max antal spelare uppnått"
+                : "Lägg till spelare"
+            }
+          >
+            <AddCircleIcon
+              sx={{
+                color: maxPlayersReached ? "action.disabled" : "error.main",
+                opacity: maxPlayersReached ? 0.4 : 1,
+                width: 72,
+                height: 72,
+              }}
+            />
+          </IconButton>
+        </span>
+      </Tooltip>
+
+      <Typography variant="h6" gutterBottom color="text.primary">
         Lägg till fler spelare
       </Typography>
 
@@ -89,7 +131,6 @@ export const AddPlayersPage = () => {
         variant="contained"
         color="error"
         onClick={handleStart}
-        // fullWidth
         sx={{
           width: "240px",
         }}
@@ -97,6 +138,25 @@ export const AddPlayersPage = () => {
       >
         Starta spelet
       </AppButton>
+      <FeedbackDialog
+        open={dialog.open}
+        title={dialog.title}
+        message={dialog.message}
+        type={dialog.type}
+        onClose={() => setDialog((prev) => ({ ...prev, open: false }))}
+      />
+      <VariantModal
+        open={variantOpen}
+        onClose={() => setVariantOpen(false)}
+        onSelect={(variant) => {
+          navigate("/game", {
+            state: {
+              players: selectedPlayers,
+              variant,
+            },
+          });
+        }}
+      />
     </Box>
   );
 };

@@ -1,39 +1,54 @@
 import { TableCell, TextField } from "@mui/material";
 
 type ScoreCellProps = {
-  playerId: string;
   category: string;
   value: string | number;
   onChange: (value: string) => void;
   error?: boolean;
+  playerName: string;
 };
 
-export const ScoreCell = ({ value, onChange, error }: ScoreCellProps) => {
+export const ScoreCell = ({
+  value,
+  onChange,
+  error,
+  category,
+  playerName,
+}: ScoreCellProps) => {
   return (
-    <TableCell sx={{ padding: "4px" }}>
+    <TableCell sx={{ padding: "4px " }}>
       <TextField
+        aria-label={`Poäng för ${category}, spelare ${playerName}`}
         type="text"
-        inputProps={{
-          inputMode: "numeric",
-          pattern: "[0-9]*",
-        }}
+        size="small"
         variant="standard"
         error={error}
-        helperText={error ? "För högt värde" : " "}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        helperText={error ? "För högt värde" : undefined}
         InputProps={{
           disableUnderline: true,
           sx: {
-            padding: 0,
             width: "40px",
-            textAlign: "center",
             border: "1px solid #ccc",
             borderRadius: "4px",
             background: "#fff",
-            fontSize: "0.9rem",
+
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+
+            inputMode: "numeric",
+            pattern: "[0-9]*",
+
+            "& input": {
+              padding: 0,
+              height: "100%",
+              textAlign: "center",
+              fontSize: "0.9rem",
+            },
           },
         }}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
       />
     </TableCell>
   );
