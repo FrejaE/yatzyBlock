@@ -111,7 +111,6 @@ export const AddPlayersPage = () => {
                 : "Lägg till spelare"
             }
           >
-            {/* TODO : Använd theme */}
             <AddCircleIcon
               sx={{
                 color: maxPlayersReached ? "action.disabled" : "error.main",

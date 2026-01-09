@@ -72,9 +72,6 @@ export const ScoreTable = () => {
   if (!players) {
     return <Typography variant="h6">Omdirigerar...</Typography>;
   }
-  useEffect(() => {
-    console.log("SCORES", scores);
-  }, [scores]);
 
   const handleChange = (
     rawValue: string,
